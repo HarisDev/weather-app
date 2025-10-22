@@ -2,6 +2,11 @@ import { GEO_IP_API } from "@/constants/api";
 import { getCachedLocation, setCachedLocation } from "@/lib/cache-geolocation";
 import type { GeoIpLocationResponse } from "@/types/api/client";
 
+/**
+ * Get the user's geolocation from the IP API.
+ * @param onError - Callback function to be called when the geolocation retrieval fails.
+ * @returns The geolocation or null if it doesn't exist or has expired.
+ */
 export async function getGeoIpLocation(onError: (error: Error) => void): Promise<GeoIpLocationResponse | null> {
   const cachedLocation = getCachedLocation();
   if (cachedLocation) {
