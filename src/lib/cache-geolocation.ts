@@ -1,4 +1,4 @@
-import type { GeoIpLocationResponse } from "@/api/geo-ip/client";
+import type { GeoIpLocationResponse } from "@/types/api/client";
 import type { CacheGeoLocation } from "@/types/cache-geolocation";
 
 /**

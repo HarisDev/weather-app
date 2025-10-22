@@ -1,7 +1,5 @@
-import { createFileRoute } from "@tanstack/react-router";
 import { InputGroup, InputGroupInput, InputGroupAddon } from "@/components/ui/input-group";
-import { Accessibility, AccessibilityIcon, CloudLightning, PersonStanding, Search, Settings, Sun } from "lucide-react";
-import { Item, ItemContent, ItemTitle, ItemDescription, ItemActions } from "@/components/ui/item";
+import { PersonStanding, Search, Settings } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 // sunny - from-sky-800 to-sky-300 -> bg-sky-700/30
