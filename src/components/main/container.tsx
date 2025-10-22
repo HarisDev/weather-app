@@ -8,7 +8,7 @@
 
 export default function Container({ children }: { children: React.ReactNode }) {
   return (
-    <div className="min-h-screen bg-gradient-to-b from-blue-900 to-slate-300">
+    <div className="min-h-screen bg-gradient-to-b from-slate-700 to-slate-300">
       <div className="text-center max-w-5xl py-10 mx-auto px-5 gap-10 flex flex-col min-h-screen justify-between">{children}</div>
     </div>
   );
