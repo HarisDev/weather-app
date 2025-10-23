@@ -1,4 +1,4 @@
-import { useQuery } from "@tanstack/react-query";
+import { keepPreviousData, useQuery } from "@tanstack/react-query";
 import { getCurrentConditions } from "./client";
 import type { CurrentConditions, CurrentConditionsInput } from "@/types/api/google-weather";
 
@@ -14,5 +14,6 @@ export function useCurrentConditions(input: CurrentConditionsInput | null, enabl
     queryFn: () => getCurrentConditions(input!),
     enabled: enabled && !!input && !!input.location,
     staleTime: 1000 * 60 * 5, // 5 minutes
+    placeholderData: keepPreviousData,
   });
 }

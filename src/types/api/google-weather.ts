@@ -22,6 +22,7 @@ export interface WeatherCondition {
 export interface CurrentConditions {
   weatherCondition: WeatherCondition;
   temperature: Temperature;
+  feelsLikeTemperature: Temperature;
 }
 
 export interface CurrentConditionsInput {

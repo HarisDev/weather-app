@@ -3,6 +3,7 @@ import type { Suggestion } from "@/types/api/google-places";
 import { usePlaceDetails } from "@/api/google-places/hooks";
 import { useCurrentConditions } from "@/api/google-weather/hooks";
 import { Skeleton } from "@/components/ui/skeleton";
+import { formatTemperature } from "@/lib/format-temperature";
 
 export default function Suggestion({ suggestion }: { suggestion: Suggestion }) {
   const prediction = suggestion.placePrediction;
@@ -30,7 +31,7 @@ export default function Suggestion({ suggestion }: { suggestion: Suggestion }) {
           {weatherData && (
             <div className="flex items-center gap-2 absolute inset-0 transition-opacity duration-300 ease-in-out animate-in fade-in">
               <img alt={weatherData.weatherCondition.description.text} className="w-6 h-6" src={`${weatherData.weatherCondition.iconBaseUri}.svg`} />
-              <span className="text-sm font-semibold text-gray-700">{Math.round(weatherData.temperature.degrees)}°</span>
+              <span className="text-sm font-semibold text-gray-700">{formatTemperature(weatherData.temperature.degrees)}</span>
             </div>
           )}
         </div>
