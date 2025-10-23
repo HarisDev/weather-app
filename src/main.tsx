@@ -8,6 +8,7 @@ import { routeTree } from './routeTree.gen'
 import './styles.css'
 import reportWebVitals from './reportWebVitals.ts'
 import { CurrentWeatherProvider } from './contexts/CurrentWeatherContext'
+import { UnitsSystemProvider } from './contexts/UnitsSystemContext'
 
 // Create a new router instance
 const router = createRouter({
@@ -32,9 +33,11 @@ if (rootElement && !rootElement.innerHTML) {
   const root = ReactDOM.createRoot(rootElement)
   root.render(
     <StrictMode>
-      <CurrentWeatherProvider>
-        <RouterProvider router={router} />
-      </CurrentWeatherProvider>
+      <UnitsSystemProvider>
+        <CurrentWeatherProvider>
+          <RouterProvider router={router} />
+        </CurrentWeatherProvider>
+      </UnitsSystemProvider>
     </StrictMode>,
   )
 }

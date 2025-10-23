@@ -5,13 +5,15 @@ import { useCurrentConditions } from "@/api/google-weather/hooks";
 import { Skeleton } from "@/components/ui/skeleton";
 import { formatTemperature } from "@/lib/format-weather";
 import { useCurrentWeather } from "@/contexts/CurrentWeatherContext";
+import { useUnitsSystem } from "@/contexts/UnitsSystemContext";
 
 export default function Suggestion({ suggestion, handleClose }: { suggestion: Suggestion; handleClose: () => void }) {
   const prediction = suggestion.placePrediction;
   const { setSelectedPlace } = useCurrentWeather();
+  const { unitsSystem } = useUnitsSystem();
 
   const { data: placeDetails } = usePlaceDetails(prediction?.placeId);
-  const { data: weatherData, isFetching: isWeatherFetching } = useCurrentConditions(placeDetails?.location ? { location: placeDetails.location, unitsSystem: "METRIC" } : null);
+  const { data: weatherData, isFetching: isWeatherFetching } = useCurrentConditions(placeDetails?.location ? { location: placeDetails.location, unitsSystem } : null);
 
   const handleClick = () => {
     if (placeDetails?.location && prediction?.structuredFormat?.mainText?.text) {

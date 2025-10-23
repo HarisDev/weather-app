@@ -5,11 +5,13 @@ import { formatTemperature } from "@/lib/format-weather";
 import { useCurrentWeather } from "@/contexts/CurrentWeatherContext";
 import { useEffect, useState } from "react";
 import { WEATHER_CONDITION_STYLES } from "@/constants/colors";
+import { useUnitsSystem } from "@/contexts/UnitsSystemContext";
 
 export default function RecentSearchItem({ name, latitude, longitude }: { name: string; latitude?: number; longitude?: number }) {
   const [bgColor, setBgColor] = useState("bg-slate-500/30");
+  const { unitsSystem } = useUnitsSystem();
 
-  const { data: weatherData, isFetching } = useCurrentConditions(latitude && longitude ? { location: { latitude, longitude }, unitsSystem: "METRIC" } : null);
+  const { data: weatherData, isFetching } = useCurrentConditions(latitude && longitude ? { location: { latitude, longitude }, unitsSystem } : null);
   const { setSelectedPlace, currentWeatherType } = useCurrentWeather();
 
   const handleClick = () => {

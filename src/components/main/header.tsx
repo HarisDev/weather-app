@@ -1,6 +1,7 @@
-import { PersonStanding, Settings } from "lucide-react";
+import { PersonStanding } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Search from "./search/search";
+import UnitSettings from "./settings/unit";
 
 export default function Header() {
   return (
@@ -10,11 +11,9 @@ export default function Header() {
         <div className="flex flex-row justify-between gap-3">
           <Search />
 
-          <Button variant="outline" className="bg-white text-black">
-            <Settings />
-          </Button>
+          <UnitSettings />
 
-          <Button variant="outline" className="bg-white text-black">
+          <Button variant="outline" className="bg-white text-black" aria-label="User profile">
             <PersonStanding />
           </Button>
         </div>
