@@ -52,7 +52,7 @@ export default function Search() {
           <InputGroupAddon align="inline-end">{isFetching && <Spinner />}</InputGroupAddon>
         </InputGroup>
       </PopoverTrigger>
-      <PopoverContent className="p-0 ml-[1.25rem] sm:ml-0 w-[calc(100vw-2.5rem)] sm:w-(--radix-popover-trigger-width)" onOpenAutoFocus={(e) => e.preventDefault()} role="dialog" aria-label="Location search results">
+      <PopoverContent className="p-0 w-[calc(100vw-2.5rem)] sm:w-(--radix-popover-trigger-width)" onOpenAutoFocus={(e) => e.preventDefault()} role="dialog" aria-label="Location search results">
         <div id="search-suggestions" className="flex flex-col rounded-md overflow-hidden" role="listbox">
           {isEmpty && (
             <div className="px-4 py-3 text-left text-gray-500" role="status">
