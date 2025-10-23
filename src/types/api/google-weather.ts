@@ -29,3 +29,35 @@ export interface CurrentConditionsInput {
   location: LatLng;
   unitsSystem?: "METRIC" | "IMPERIAL";
 }
+
+export interface ForecastDay {
+  interval: {
+    startTime: string;
+    endTime: string;
+  };
+  displayDate: {
+    year: number;
+    month: number;
+    day: number;
+  };
+  daytimeForecast?: {
+    weatherCondition: WeatherCondition;
+  };
+  nighttimeForecast?: {
+    weatherCondition: WeatherCondition;
+  };
+  maxTemperature: Temperature;
+  minTemperature: Temperature;
+}
+
+export interface DailyForecastResponse {
+  forecastDays: ForecastDay[];
+  timeZone: string;
+  nextPageToken?: string;
+}
+
+export interface ForecastInput {
+  location: LatLng;
+  days?: number;
+  unitsSystem?: "METRIC" | "IMPERIAL";
+}

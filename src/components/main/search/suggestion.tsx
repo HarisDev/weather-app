@@ -3,7 +3,7 @@ import type { Suggestion } from "@/types/api/google-places";
 import { usePlaceDetails } from "@/api/google-places/hooks";
 import { useCurrentConditions } from "@/api/google-weather/hooks";
 import { Skeleton } from "@/components/ui/skeleton";
-import { formatTemperature } from "@/lib/format-temperature";
+import { formatTemperature } from "@/lib/format-weather";
 
 export default function Suggestion({ suggestion }: { suggestion: Suggestion }) {
   const prediction = suggestion.placePrediction;
