@@ -9,7 +9,7 @@ export default function UnitSettings() {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="outline" className="bg-white text-black cursor-pointer" aria-label="Settings">
+        <Button size="lg" variant="outline" className="bg-white text-black cursor-pointer" aria-label="Settings">
           <Settings />
         </Button>
       </DropdownMenuTrigger>
