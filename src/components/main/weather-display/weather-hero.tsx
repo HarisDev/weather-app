@@ -1,11 +1,10 @@
 import { formatTemperature, formatWeatherConditionImage } from "@/lib/format-weather";
-import type { GeoLocation } from "@/types/geolocation";
 import { Navigation } from "lucide-react";
-import { Spinner } from "../ui/spinner";
-import useWeather from "@/hooks/use-weather";
+import { Spinner } from "../../ui/spinner";
+import type { UseWeatherHookResult } from "@/types/hooks/use-weather";
 
-export default function WeatherHero({ geoLocation }: { geoLocation: GeoLocation }) {
-  const { currentConditions, location, isLoading } = useWeather(geoLocation);
+export default function WeatherHero({ weather }: { weather: UseWeatherHookResult }) {
+  const { currentConditions, location, isLoading } = weather;
 
   return (
     <div className="flex flex-row h-[150px] justify-center items-center gap-2  backdrop-blur-sm rounded-md p-4 text-white">

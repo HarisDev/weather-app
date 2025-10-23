@@ -1,10 +1,11 @@
 import { createFileRoute } from "@tanstack/react-router";
 import Container from "@/components/main/container";
 import Header from "@/components/main/header";
-import WeatherHero from "@/components/main/weather-hero";
-import WeatherForecast from "@/components/main/weather-forecast";
+import WeatherHero from "@/components/main/weather-display/weather-hero";
+import WeatherForecast from "@/components/main/weather-display/weather-forecast";
 import RecentSearches from "@/components/main/recent-searches";
 import useGeoLocation from "@/hooks/use-geo-location";
+import AggregatedWeatherDisplay from "@/components/main/weather-display/aggregated-weather-display";
 
 export const Route = createFileRoute("/")({
   component: App,
@@ -19,8 +20,7 @@ function App() {
 
       <main className="max-w-5xl py-10">
         <div className="flex flex-col justify-between gap-10 md:gap-20">
-          <WeatherHero geoLocation={geoLocation} />
-          <WeatherForecast />
+          <AggregatedWeatherDisplay geoLocation={geoLocation} />
         </div>
       </main>
 
