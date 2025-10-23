@@ -1,0 +1,47 @@
+import { describe, it, expect, vi, beforeEach } from 'vitest'
+import { getGeoIpLocation } from '@/api/geo-ip/client'
+
+vi.mock('@/lib/cache-geolocation')
+
+describe('getGeoIpLocation', () => {
+  beforeEach(() => {
+    vi.clearAllMocks()
+    global.fetch = vi.fn()
+  })
+
+  it('should fetch and return location data', async () => {
+    const mockResponse = {
+      lat: 40.7128,
+      lon: -74.0060,
+      country: 'US',
+      regionName: 'New York',
+      city: 'New York',
+    }
+
+    global.fetch = vi.fn().mockResolvedValue({
+      json: () => Promise.resolve(mockResponse),
+    })
+
+    const onError = vi.fn()
+    const result = await getGeoIpLocation(onError)
+
+    expect(result).toEqual({
+      latitude: 40.7128,
+      longitude: -74.0060,
+      country: 'US',
+      regionName: 'New York',
+      city: 'New York',
+    })
+  })
+
+  it('should call onError and return null on fetch failure', async () => {
+    const error = new Error('Fetch failed')
+    global.fetch = vi.fn().mockRejectedValue(error)
+
+    const onError = vi.fn()
+    const result = await getGeoIpLocation(onError)
+
+    expect(onError).toHaveBeenCalledWith(error)
+    expect(result).toBeNull()
+  })
+})
