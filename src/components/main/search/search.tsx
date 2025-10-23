@@ -44,7 +44,7 @@ export default function Search() {
   return (
     <Popover open={isOpen} onOpenChange={setIsOpen}>
       <PopoverTrigger asChild onClick={(e) => e.preventDefault()}>
-        <InputGroup className="bg-white backdrop-blur-sm sm:w-xs h-10">
+        <InputGroup className="bg-white backdrop-blur-sm md:w-xs h-10">
           <InputGroupInput placeholder="Search for a place..." value={inputValue} onChange={handleInputChange} onFocus={() => setIsOpen(true)} aria-label="Search for a location" aria-autocomplete="list" aria-controls="search-suggestions" aria-expanded={isOpen} role="combobox" />
           <InputGroupAddon>
             <SearchIcon className={isFetching ? "animate-pulse" : ""} aria-hidden="true" />

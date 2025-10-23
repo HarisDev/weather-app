@@ -32,9 +32,10 @@ export default function UsePreciseLocation({ deviceGeoLocation }: { deviceGeoLoc
       <TooltipTrigger>
         <Button size="lg" variant="outline" onClick={handleClick} className={cn("bg-white text-black cursor-pointer")} aria-label="Toggle accessibility settings">
           <Navigation />
+          <span className="sm:hidden">Use Precise Location</span>
         </Button>
       </TooltipTrigger>
-      <TooltipContent className="bg-white text-foreground" arrowClassName="bg-white fill-white" side="bottom">
+      <TooltipContent className="bg-white text-foreground hidden  md:block" arrowClassName="bg-white fill-white" side="bottom">
         Use Precise Location
       </TooltipContent>
     </Tooltip>

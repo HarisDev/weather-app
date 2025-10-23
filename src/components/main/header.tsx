@@ -12,10 +12,10 @@ export default function Header({ deviceGeoLocation }: { deviceGeoLocation: UseGe
     <header role="banner">
       <div className="flex flex-col gap-4 md:flex-row justify-between">
         <h1 className="text-2xl font-bold text-white w-full text-center md:text-left">CleanWeather</h1>
-        <nav aria-label="Main navigation" className="flex flex-row gap-3 w-full">
+        <nav aria-label="Main navigation" className="flex flex-col-reverse sm:flex-row gap-3 w-full">
           <Search />
 
-          <div className="flex flex-row gap-3">
+          <div className="flex flex-row gap-3 justify-between sm:justify-start">
             <UsePreciseLocation deviceGeoLocation={deviceGeoLocation} />
             <ButtonGroup aria-label="Button group">
               <UnitSettings />
