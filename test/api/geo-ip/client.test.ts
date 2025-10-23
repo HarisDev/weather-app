@@ -1,5 +1,6 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest'
 import { getGeoIpLocation } from '@/api/geo-ip/client'
+import * as cacheGeolocation from '@/lib/cache-geolocation'
 
 vi.mock('@/lib/cache-geolocation')
 
@@ -10,6 +11,8 @@ describe('getGeoIpLocation', () => {
   })
 
   it('should fetch and return location data', async () => {
+    vi.mocked(cacheGeolocation.getCachedLocation).mockReturnValue(null)
+
     const mockResponse = {
       lat: 40.7128,
       lon: -74.0060,
@@ -19,6 +22,7 @@ describe('getGeoIpLocation', () => {
     }
 
     global.fetch = vi.fn().mockResolvedValue({
+      ok: true,
       json: () => Promise.resolve(mockResponse),
     })
 

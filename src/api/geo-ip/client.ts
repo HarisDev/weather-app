@@ -19,31 +19,36 @@ export async function getGeoIpLocation(onError: (error: Error) => void): Promise
     } as GeoIpLocationResponse;
   }
 
-  const response = await fetch(GEO_IP_API).catch(onError);
+  const data = await fetch(GEO_IP_API)
+    .then((response) => {
+      if (!response.ok) {
+        onError(new Error(`Geo IP API request failed: ${response.status} ${response.statusText}`));
+        return null;
+      }
+      return response.json();
+    })
+    .catch((error) => {
+      onError(error);
+      return null;
+    });
 
-  if (!response) {
+  if (!data) {
     return null;
   }
 
-  const data = await response.json();
-
-  if (!data.lat || !data.lon) {
+  if (!data.latitude || !data.longitude) {
     return null;
   }
 
-  setCachedLocation({
-    latitude: data.lat,
-    longitude: data.lon,
-    country: data.country,
-    regionName: data.regionName,
-    city: data.city,
-  });
-
-  return {
-    latitude: data.lat,
-    longitude: data.lon,
-    country: data.country,
-    regionName: data.regionName,
+  const location = {
+    latitude: data.latitude,
+    longitude: data.longitude,
+    country: data.country_name,
+    regionName: data.country_region,
     city: data.city,
   };
+
+  setCachedLocation(location);
+
+  return location;
 }

@@ -37,6 +37,7 @@ export default function useGeoLocation(): UseGeoLocationResult {
       setStatus(GeoLocationStatus.Success);
     }).then((data) => {
       if (data) {
+        // Get IP Geolocation until user gives location access
         setStatus(GeoLocationStatus.Success);
         setGeoLocation({
           latitude: data.latitude,
