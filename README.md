@@ -24,44 +24,38 @@ A modern weather application built with React, TanStack Router, and Tailwind CSS
 
 ## Getting Started
 
-### Installation
+### Prerequisites
+
+1. Copy `.env.example` to `.env` and add your API keys:
+
+   ```bash
+   cp .env.example .env
+   ```
+
+2. Get API keys from [Google Cloud Console](https://console.cloud.google.com/apis/credentials)
+
+### Run with Docker (Recommended)
 
 ```bash
-npm install
+docker-compose up --build
 ```
 
-### Development
+App available at `http://localhost:3000`
+
+### Run Locally
 
 ```bash
+# Install dependencies
+npm install
+
+# Start dev server
 npm run dev
 ```
 
-The app will be available at `http://localhost:3000`
-
-### Building For Production
+### Other Commands
 
 ```bash
-npm run build
+npm run build   # Build for production
+npm run serve   # Preview production build
+npm run test    # Run tests
 ```
-
-### Preview Production Build
-
-```bash
-npm run serve
-```
-
-### Testing
-
-```bash
-npm run test
-```
-
-## Key Features
-
-### Geolocation Hook
-
-The `useGeoLocation` hook implements a three-tier fallback strategy:
-
-1. **Browser Geolocation API**: Attempts to get precise location from the browser
-2. **GeoIP Lookup**: Falls back to IP-based geolocation with caching
-3. **Timezone Approximation**: Uses browser timezone as a last resort
