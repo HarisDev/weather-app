@@ -27,6 +27,10 @@ export async function getGeoIpLocation(onError: (error: Error) => void): Promise
 
   const data = await response.json();
 
+  if (!data.lat || !data.lon) {
+    return null;
+  }
+
   setCachedLocation({
     latitude: data.lat,
     longitude: data.lon,
