@@ -1,8 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import Container from "@/components/main/container";
 import Header from "@/components/main/header";
-import WeatherHero from "@/components/main/weather-display/weather-hero";
-import WeatherForecast from "@/components/main/weather-display/weather-forecast";
 import RecentSearches from "@/components/main/recent-searches";
 import useGeoLocation from "@/hooks/use-geo-location";
 import AggregatedWeatherDisplay from "@/components/main/weather-display/aggregated-weather-display";
@@ -21,7 +19,7 @@ function App() {
     ? {
         latitude: selectedPlace.location.latitude ?? 0,
         longitude: selectedPlace.location.longitude ?? 0,
-        status: deviceGeoLocation.status
+        status: deviceGeoLocation.status,
       }
     : deviceGeoLocation;
 
