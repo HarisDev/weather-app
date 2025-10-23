@@ -6,6 +6,7 @@ import Suggestion from "@/components/main/search/suggestion";
 import * as googlePlacesHooks from "@/api/google-places/hooks";
 import * as googleWeatherHooks from "@/api/google-weather/hooks";
 import { CurrentWeatherProvider } from "@/contexts/CurrentWeatherContext";
+import { UnitsSystemProvider } from "@/contexts/UnitsSystemContext";
 
 vi.mock("@/api/google-places/hooks");
 vi.mock("@/api/google-weather/hooks");
@@ -20,7 +21,9 @@ const createWrapper = () => {
     React.createElement(
       QueryClientProvider,
       { client: queryClient },
-      React.createElement(CurrentWeatherProvider, null, children)
+      React.createElement(UnitsSystemProvider, null,
+        React.createElement(CurrentWeatherProvider, null, children)
+      )
     );
 };
 

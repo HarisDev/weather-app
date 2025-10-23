@@ -14,10 +14,10 @@ describe('getGeoIpLocation', () => {
     vi.mocked(cacheGeolocation.getCachedLocation).mockReturnValue(null)
 
     const mockResponse = {
-      lat: 40.7128,
-      lon: -74.0060,
-      country: 'US',
-      regionName: 'New York',
+      latitude: 40.7128,
+      longitude: -74.0060,
+      country_name: 'US',
+      country_region: 'New York',
       city: 'New York',
     }
 
