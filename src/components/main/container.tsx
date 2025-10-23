@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 export default function Container({ children }: { children: React.ReactNode }) {
   const { currentWeatherType } = useCurrentWeather();
 
-  const [bgColor, setBgColor] = useState("from-slate-700 to-slate-300");
+  const [bgColor, setBgColor] = useState("from-sky-700 to-slate-300");
 
   useEffect(() => {
     if (currentWeatherType) {

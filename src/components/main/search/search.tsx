@@ -45,17 +45,32 @@ export default function Search() {
     <Popover open={isOpen} onOpenChange={setIsOpen}>
       <PopoverTrigger asChild onClick={(e) => e.preventDefault()}>
         <InputGroup className="bg-white backdrop-blur-sm sm:w-xs">
-          <InputGroupInput placeholder="Search for a place..." value={inputValue} onChange={handleInputChange} onFocus={() => setIsOpen(true)} />
+          <InputGroupInput
+            placeholder="Search for a place..."
+            value={inputValue}
+            onChange={handleInputChange}
+            onFocus={() => setIsOpen(true)}
+            aria-label="Search for a location"
+            aria-autocomplete="list"
+            aria-controls="search-suggestions"
+            aria-expanded={isOpen}
+            role="combobox"
+          />
           <InputGroupAddon>
-            <SearchIcon className={isFetching ? "animate-pulse" : ""} />
+            <SearchIcon className={isFetching ? "animate-pulse" : ""} aria-hidden="true" />
           </InputGroupAddon>
           <InputGroupAddon align="inline-end">{isFetching && <Spinner />}</InputGroupAddon>
         </InputGroup>
       </PopoverTrigger>
-      <PopoverContent className="p-0 w-(--radix-popover-trigger-width)" onOpenAutoFocus={(e) => e.preventDefault()}>
-        <div className="flex flex-col rounded-md overflow-hidden">
-          {isEmpty && <div className="px-4 py-3 text-left text-sm text-gray-500">No places found.</div>}
-          {isAboutToSearch && <div className="px-4 py-3 text-left text-sm text-gray-500">Start typing to search for a place.</div>}
+      <PopoverContent
+        className="p-0 w-(--radix-popover-trigger-width)"
+        onOpenAutoFocus={(e) => e.preventDefault()}
+        role="dialog"
+        aria-label="Location search results"
+      >
+        <div id="search-suggestions" className="flex flex-col rounded-md overflow-hidden" role="listbox">
+          {isEmpty && <div className="px-4 py-3 text-left text-sm text-gray-500" role="status">No places found.</div>}
+          {isAboutToSearch && <div className="px-4 py-3 text-left text-sm text-gray-500" role="status">Start typing to search for a place.</div>}
 
           {suggestions?.map((suggestion) => {
             if (!suggestion.placePrediction) return null;

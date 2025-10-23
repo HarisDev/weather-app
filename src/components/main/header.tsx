@@ -5,10 +5,10 @@ import UnitSettings from "./settings/unit";
 
 export default function Header() {
   return (
-    <header>
+    <header role="banner">
       <div className="flex flex-col items-center gap-4 md:flex-row justify-between">
-        <span className="text-2xl font-bold text-white">CleanWeather</span>
-        <div className="flex flex-row justify-between gap-3">
+        <h1 className="text-2xl font-bold text-white">CleanWeather</h1>
+        <nav aria-label="Main navigation" className="flex flex-row justify-between gap-3">
           <Search />
 
           <UnitSettings />
@@ -16,7 +16,7 @@ export default function Header() {
           <Button variant="outline" className="bg-white text-black" aria-label="User profile">
             <PersonStanding />
           </Button>
-        </div>
+        </nav>
       </div>
     </header>
   );

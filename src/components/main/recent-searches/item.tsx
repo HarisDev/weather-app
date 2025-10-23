@@ -33,7 +33,19 @@ export default function RecentSearchItem({ name, latitude, longitude }: { name: 
   }, [currentWeatherType]);
 
   return (
-    <Item className={`${bgColor} cursor-pointer transition-colors`} onClick={handleClick}>
+    <Item
+      className={`${bgColor} cursor-pointer transition-colors`}
+      onClick={handleClick}
+      role="button"
+      tabIndex={0}
+      onKeyDown={(e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          handleClick();
+        }
+      }}
+      aria-label={`View weather for ${name}${weatherData ? `, currently ${weatherData.weatherCondition.description.text} at ${formatTemperature(weatherData.temperature.degrees)}` : ''}`}
+    >
       <ItemContent>
         <ItemTitle className="text-white">{name}</ItemTitle>
         {isFetching ? (
@@ -46,7 +58,7 @@ export default function RecentSearchItem({ name, latitude, longitude }: { name: 
           <ItemDescription className="text-white">-</ItemDescription>
         )}
       </ItemContent>
-      <ItemActions>{isFetching ? <Skeleton className="w-8 h-8 rounded-md bg-white/10" /> : weatherData ? <img src={`${weatherData.weatherCondition.iconBaseUri}.svg`} alt={weatherData.weatherCondition.description.text} className="w-8 h-8" /> : null}</ItemActions>
+      <ItemActions>{isFetching ? <Skeleton className="w-8 h-8 rounded-md bg-white/10" /> : weatherData ? <img src={`${weatherData.weatherCondition.iconBaseUri}.svg`} alt={weatherData.weatherCondition.description.text} className="w-8 h-8" aria-hidden="true" /> : null}</ItemActions>
     </Item>
   );
 }

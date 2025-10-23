@@ -26,10 +26,16 @@ export default function Suggestion({ suggestion, handleClose }: { suggestion: Su
   };
 
   return (
-    <div className="px-4 py-4 cursor-pointer hover:bg-gray-100 border-b border-gray-100 last:border-b-0" onClick={handleClick}>
+    <button
+      type="button"
+      className="w-full px-4 py-4 cursor-pointer hover:bg-gray-100 border-b border-gray-100 last:border-b-0 text-left"
+      onClick={handleClick}
+      role="option"
+      aria-label={`Select ${prediction?.structuredFormat?.mainText?.text}, ${prediction?.structuredFormat?.secondaryText?.text}`}
+    >
       <div className="flex items-center justify-between gap-3">
         <div className="flex items-start gap-3 flex-1 min-w-0">
-          <MapPin className="w-5 h-5 text-gray-400 flex-shrink-0 mt-0.5" />
+          <MapPin className="w-5 h-5 text-gray-400 flex-shrink-0 mt-0.5" aria-hidden="true" />
           <div className="flex-1 min-w-0 items-start align-left">
             <div className="text-sm font-medium text-gray-900 truncate text-left">{prediction?.structuredFormat?.mainText?.text}</div>
             <div className="text-xs text-gray-500 truncate text-left">{prediction?.structuredFormat?.secondaryText?.text}</div>
@@ -50,6 +56,6 @@ export default function Suggestion({ suggestion, handleClose }: { suggestion: Su
           )}
         </div>
       </div>
-    </div>
+    </button>
   );
 }
