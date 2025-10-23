@@ -3,10 +3,14 @@ import { useCurrentConditions } from "@/api/google-weather/hooks";
 import { Skeleton } from "@/components/ui/skeleton";
 import { formatTemperature } from "@/lib/format-weather";
 import { useCurrentWeather } from "@/contexts/CurrentWeatherContext";
+import { useEffect, useState } from "react";
+import { WEATHER_CONDITION_STYLES } from "@/constants/colors";
 
 export default function RecentSearchItem({ name, latitude, longitude }: { name: string; latitude?: number; longitude?: number }) {
+  const [bgColor, setBgColor] = useState("bg-slate-500/30");
+
   const { data: weatherData, isFetching } = useCurrentConditions(latitude && longitude ? { location: { latitude, longitude }, unitsSystem: "METRIC" } : null);
-  const { setSelectedPlace } = useCurrentWeather();
+  const { setSelectedPlace, currentWeatherType } = useCurrentWeather();
 
   const handleClick = () => {
     if (latitude && longitude) {
@@ -20,8 +24,14 @@ export default function RecentSearchItem({ name, latitude, longitude }: { name: 
     }
   };
 
+  useEffect(() => {
+    if (currentWeatherType) {
+      setBgColor(WEATHER_CONDITION_STYLES[currentWeatherType as keyof typeof WEATHER_CONDITION_STYLES]?.secondary);
+    }
+  }, [currentWeatherType]);
+
   return (
-    <Item className="bg-slate-500/30 cursor-pointer hover:bg-slate-500/40 transition-colors" onClick={handleClick}>
+    <Item className={`${bgColor} cursor-pointer transition-colors`} onClick={handleClick}>
       <ItemContent>
         <ItemTitle className="text-white">{name}</ItemTitle>
         {isFetching ? (

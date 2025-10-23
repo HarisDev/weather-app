@@ -10,12 +10,15 @@ interface SelectedPlace {
 interface CurrentWeatherContextType {
   selectedPlace: SelectedPlace | null;
   setSelectedPlace: (place: SelectedPlace | null, saveToRecentSearches?: boolean) => void;
+  currentWeatherType: string | null;
+  setCurrentWeatherType: (type: string) => void;
 }
 
 const CurrentWeatherContext = createContext<CurrentWeatherContextType | undefined>(undefined);
 
 export function CurrentWeatherProvider({ children }: { children: ReactNode }) {
   const [selectedPlace, setSelectedPlaceState] = useState<SelectedPlace | null>(null);
+  const [currentWeatherType, setCurrentWeatherType] = useState<string | null>(null);
 
   const setSelectedPlace = useCallback((place: SelectedPlace | null, saveToRecentSearches = true) => {
     setSelectedPlaceState(place);
@@ -29,7 +32,7 @@ export function CurrentWeatherProvider({ children }: { children: ReactNode }) {
     }
   }, []);
 
-  return <CurrentWeatherContext.Provider value={{ selectedPlace, setSelectedPlace }}>{children}</CurrentWeatherContext.Provider>;
+  return <CurrentWeatherContext.Provider value={{ selectedPlace, setSelectedPlace, currentWeatherType, setCurrentWeatherType }}>{children}</CurrentWeatherContext.Provider>;
 }
 
 export function useCurrentWeather() {

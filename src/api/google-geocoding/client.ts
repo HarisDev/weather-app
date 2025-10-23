@@ -15,45 +15,46 @@ export async function reverseGeocode(latitude: number, longitude: number): Promi
     const data = await response.json();
 
     if (data.status === "OK" && data.results.length > 0) {
-      // Priority order for city name fallback
-      const cityTypePriority = ["locality", "postal_town", "administrative_area_level_2", "administrative_area_level_1", "sublocality"];
+      let city = "";
 
-      let city: string | undefined;
-      let country: string | undefined;
-
-      // Look through all results to find the best city name
-      for (const result of data.results) {
-        const addressComponents = result.address_components;
-
-        // Extract country if not found yet
-        if (!country) {
-          const countryComponent = addressComponents.find((component: any) => component.types.includes("country"));
-          if (countryComponent) {
-            country = countryComponent.long_name;
-          }
-        }
-
-        // Look for city name in priority order
-        if (!city) {
-          for (const type of cityTypePriority) {
-            const component = addressComponents.find((comp: any) => comp.types.includes(type));
-            if (component) {
-              city = component.long_name;
-              break;
-            }
-          }
-        }
-
-        // Early exit if we found both
-        if (city && country) break;
+      // Try to get compound_code from plus_code first
+      if (data.plus_code?.compound_code) {
+        city = data.plus_code.compound_code.split(" ").slice(1).join(" ");
       }
 
-      // Final fallback to coordinates if no city name found
+      // If compound_code doesn't exist or is empty, try to extract from results
       if (!city) {
-        city = `${latitude.toFixed(2)}, ${longitude.toFixed(2)}`;
+        // Look for locality, administrative_area, or country
+        for (const result of data.results) {
+          const addressComponents = result.address_components || [];
+
+          // Try to find locality first
+          const locality = addressComponents.find((component: any) => component.types.includes("locality"));
+
+          if (locality?.long_name) {
+            city = locality.long_name;
+            break;
+          }
+
+          // Fall back to administrative_area_level_1
+          const adminArea = addressComponents.find((component: any) => component.types.includes("administrative_area_level_1"));
+
+          if (adminArea?.long_name) {
+            city = adminArea.long_name;
+            break;
+          }
+
+          // Last resort: use country
+          const country = addressComponents.find((component: any) => component.types.includes("country"));
+
+          if (country?.long_name) {
+            city = country.long_name;
+            break;
+          }
+        }
       }
 
-      return { city, country };
+      return city ? { city } : null;
     }
 
     return null;
