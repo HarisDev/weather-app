@@ -1,7 +1,8 @@
-import { PersonStanding } from "lucide-react";
+import { PersonStanding, Accessibility } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Search from "./search/search";
 import UnitSettings from "./settings/unit";
+import { toggleAccessibilityWidget } from "@/lib/accessibility";
 
 export default function Header() {
   return (
@@ -13,7 +14,7 @@ export default function Header() {
 
           <UnitSettings />
 
-          <Button variant="outline" className="bg-white text-black" aria-label="User profile">
+          <Button variant="outline" onClick={toggleAccessibilityWidget} className="bg-white text-black cursor-pointer" aria-label="Toggle accessibility settings">
             <PersonStanding />
           </Button>
         </nav>
