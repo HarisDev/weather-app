@@ -1,5 +1,6 @@
-import { createContext, useContext, useState, ReactNode } from "react";
+import { createContext, useContext, useState, type ReactNode, useCallback } from "react";
 import type { GeoLocation } from "@/types/geolocation";
+import { addRecentSearch } from "@/lib/recent-searches";
 
 interface SelectedPlace {
   name: string;
@@ -8,19 +9,27 @@ interface SelectedPlace {
 
 interface CurrentWeatherContextType {
   selectedPlace: SelectedPlace | null;
-  setSelectedPlace: (place: SelectedPlace | null) => void;
+  setSelectedPlace: (place: SelectedPlace | null, saveToRecentSearches?: boolean) => void;
 }
 
 const CurrentWeatherContext = createContext<CurrentWeatherContextType | undefined>(undefined);
 
 export function CurrentWeatherProvider({ children }: { children: ReactNode }) {
-  const [selectedPlace, setSelectedPlace] = useState<SelectedPlace | null>(null);
+  const [selectedPlace, setSelectedPlaceState] = useState<SelectedPlace | null>(null);
 
-  return (
-    <CurrentWeatherContext.Provider value={{ selectedPlace, setSelectedPlace }}>
-      {children}
-    </CurrentWeatherContext.Provider>
-  );
+  const setSelectedPlace = useCallback((place: SelectedPlace | null, saveToRecentSearches = true) => {
+    setSelectedPlaceState(place);
+
+    // Save to localStorage if a place is selected
+    if (place && saveToRecentSearches) {
+      addRecentSearch({
+        name: place.name,
+        location: place.location,
+      });
+    }
+  }, []);
+
+  return <CurrentWeatherContext.Provider value={{ selectedPlace, setSelectedPlace }}>{children}</CurrentWeatherContext.Provider>;
 }
 
 export function useCurrentWeather() {
