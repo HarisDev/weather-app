@@ -1,4 +1,4 @@
-import { PersonStanding, Accessibility } from "lucide-react";
+import { PersonStanding } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Search from "./search/search";
 import UnitSettings from "./settings/unit";

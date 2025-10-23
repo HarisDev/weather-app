@@ -1,4 +1,4 @@
-import { createContext, useContext, useState, type ReactNode, useEffect, useCallback } from "react";
+import { createContext, useContext, useState, type ReactNode, useCallback } from "react";
 
 export type UnitsSystem = "METRIC" | "IMPERIAL";
 
