@@ -1,13 +1,6 @@
 import { Settings } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import {
-  DropdownMenu,
-  DropdownMenuCheckboxItem,
-  DropdownMenuContent,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
+import { DropdownMenu, DropdownMenuCheckboxItem, DropdownMenuContent, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { useUnitsSystem } from "@/contexts/UnitsSystemContext";
 
 export default function UnitSettings() {
@@ -16,7 +9,7 @@ export default function UnitSettings() {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="outline" className="bg-white text-black" aria-label="Settings">
+        <Button variant="outline" className="bg-white text-black cursor-pointer" aria-label="Settings">
           <Settings />
         </Button>
       </DropdownMenuTrigger>
