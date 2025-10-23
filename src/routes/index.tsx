@@ -25,7 +25,7 @@ function App() {
 
   return (
     <Container>
-      <Header />
+      <Header deviceGeoLocation={deviceGeoLocation} />
 
       <main className="max-w-5xl py-10">
         <div className="flex flex-col justify-between gap-10 md:gap-20">

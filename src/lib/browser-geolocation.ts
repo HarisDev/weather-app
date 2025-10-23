@@ -20,3 +20,12 @@ export const getBrowserGeolocation = (
 ): void => {
   navigator.geolocation.watchPosition(onSuccess, onError, options);
 };
+
+export const isBrowserGeolocationAllowed = async (): Promise<boolean> => {
+  try {
+    const result = await navigator.permissions.query({ name: "geolocation" });
+    return result.state === "granted";
+  } catch (error) {
+    return false;
+  }
+};

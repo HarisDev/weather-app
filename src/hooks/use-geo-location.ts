@@ -1,12 +1,13 @@
 import { useEffect, useState } from "react";
 import type { GeoLocation } from "@/types/geolocation";
 import { GeoLocationStatus } from "@/types/geolocation";
-import { getBrowserGeolocation } from "@/lib/browser-geolocation";
+import { getBrowserGeolocation, isBrowserGeolocationAllowed } from "@/lib/browser-geolocation";
 import { getGeoIpLocation } from "@/api/geo-ip/client";
 import { getTimezoneBasedLocation } from "@/lib/timezone-geolocation";
 
-type UseGeoLocationResult = GeoLocation & {
+export type UseGeoLocationResult = GeoLocation & {
   status: GeoLocationStatus;
+  setGeoLocation: (location: GeoLocation) => void;
 };
 
 /**
@@ -21,13 +22,23 @@ export default function useGeoLocation(): UseGeoLocationResult {
   const [status, setStatus] = useState<GeoLocationStatus>(GeoLocationStatus.Loading);
 
   useEffect(() => {
-    // 1. Get browser geolocation immediately and update state as most confident location. Fire and forget.
-    getBrowserGeolocation((position) =>
-      setGeoLocation({
-        latitude: position.coords.latitude,
-        longitude: position.coords.longitude,
-      })
-    );
+    // 1. Get browser geolocation asynchronously with the dedicated button
+    //    and update state as most confident location. Fire and forget.
+    // or check if browser geolocation is allowed and get it if it is.
+    // @see UsePreciseLocation
+
+    isBrowserGeolocationAllowed().then((allowed) => {
+      if (!allowed) {
+        return;
+      }
+
+      getBrowserGeolocation((position) => {
+        setGeoLocation({
+          latitude: position.coords.latitude,
+          longitude: position.coords.longitude,
+        });
+      });
+    });
 
     // 2. At the same time, try to get IP geolocation and update state if successful as a first contentful paint.
     getGeoIpLocation(() => {
@@ -51,5 +62,6 @@ export default function useGeoLocation(): UseGeoLocationResult {
     latitude: geoLocation?.latitude ?? 0,
     longitude: geoLocation?.longitude ?? 0,
     status,
+    setGeoLocation,
   };
 }
