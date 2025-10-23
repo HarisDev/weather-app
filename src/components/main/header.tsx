@@ -4,7 +4,6 @@ import Search from "./search/search";
 import UnitSettings from "./settings/unit";
 import { toggleAccessibilityWidget } from "@/lib/accessibility";
 import { ButtonGroup } from "../ui/button-group";
-import { Tooltip, TooltipContent, TooltipTrigger } from "../ui/tooltip";
 
 export default function Header() {
   return (
