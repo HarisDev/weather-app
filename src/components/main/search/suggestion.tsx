@@ -4,15 +4,27 @@ import { usePlaceDetails } from "@/api/google-places/hooks";
 import { useCurrentConditions } from "@/api/google-weather/hooks";
 import { Skeleton } from "@/components/ui/skeleton";
 import { formatTemperature } from "@/lib/format-weather";
+import { useCurrentWeather } from "@/contexts/CurrentWeatherContext";
 
-export default function Suggestion({ suggestion }: { suggestion: Suggestion }) {
+export default function Suggestion({ suggestion, handleClose }: { suggestion: Suggestion; handleClose: () => void }) {
   const prediction = suggestion.placePrediction;
+  const { setSelectedPlace } = useCurrentWeather();
 
   const { data: placeDetails } = usePlaceDetails(prediction?.placeId);
   const { data: weatherData, isFetching: isWeatherFetching } = useCurrentConditions(placeDetails?.location ? { location: placeDetails.location, unitsSystem: "METRIC" } : null);
 
+  const handleClick = () => {
+    if (placeDetails?.location && prediction?.structuredFormat?.mainText?.text) {
+      setSelectedPlace({
+        name: prediction.structuredFormat.mainText.text,
+        location: placeDetails.location,
+      });
+      handleClose();
+    }
+  };
+
   return (
-    <div className="px-4 py-4 cursor-pointer hover:bg-gray-100 border-b border-gray-100 last:border-b-0">
+    <div className="px-4 py-4 cursor-pointer hover:bg-gray-100 border-b border-gray-100 last:border-b-0" onClick={handleClick}>
       <div className="flex items-center justify-between gap-3">
         <div className="flex items-start gap-3 flex-1 min-w-0">
           <MapPin className="w-5 h-5 text-gray-400 flex-shrink-0 mt-0.5" />

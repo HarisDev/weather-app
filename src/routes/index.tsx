@@ -6,13 +6,24 @@ import WeatherForecast from "@/components/main/weather-display/weather-forecast"
 import RecentSearches from "@/components/main/recent-searches";
 import useGeoLocation from "@/hooks/use-geo-location";
 import AggregatedWeatherDisplay from "@/components/main/weather-display/aggregated-weather-display";
+import { useCurrentWeather } from "@/contexts/CurrentWeatherContext";
 
 export const Route = createFileRoute("/")({
   component: App,
 });
 
 function App() {
-  const geoLocation = useGeoLocation();
+  const deviceGeoLocation = useGeoLocation();
+  const { selectedPlace } = useCurrentWeather();
+
+  // Use selected place location if available, otherwise fall back to device location
+  const geoLocation = selectedPlace?.location
+    ? {
+        latitude: selectedPlace.location.latitude ?? 0,
+        longitude: selectedPlace.location.longitude ?? 0,
+        status: deviceGeoLocation.status
+      }
+    : deviceGeoLocation;
 
   return (
     <Container>

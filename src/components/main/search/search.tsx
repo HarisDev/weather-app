@@ -60,7 +60,7 @@ export default function Search() {
           {suggestions?.map((suggestion) => {
             if (!suggestion.placePrediction) return null;
 
-            return <Suggestion suggestion={suggestion} key={suggestion.placePrediction.placeId} />;
+            return <Suggestion suggestion={suggestion} key={suggestion.placePrediction.placeId} handleClose={() => setIsOpen(false)} />;
           })}
         </div>
       </PopoverContent>

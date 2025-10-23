@@ -7,6 +7,7 @@ import { routeTree } from './routeTree.gen'
 
 import './styles.css'
 import reportWebVitals from './reportWebVitals.ts'
+import { CurrentWeatherProvider } from './contexts/CurrentWeatherContext'
 
 // Create a new router instance
 const router = createRouter({
@@ -31,7 +32,9 @@ if (rootElement && !rootElement.innerHTML) {
   const root = ReactDOM.createRoot(rootElement)
   root.render(
     <StrictMode>
-      <RouterProvider router={router} />
+      <CurrentWeatherProvider>
+        <RouterProvider router={router} />
+      </CurrentWeatherProvider>
     </StrictMode>,
   )
 }
