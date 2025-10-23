@@ -1,5 +1,5 @@
 {
-  "projectName": "space-weather",
+  "projectName": "clean-weather",
   "mode": "file-router",
   "typescript": true,
   "tailwind": true,

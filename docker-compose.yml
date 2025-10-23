@@ -1,0 +1,21 @@
+version: "3.8"
+
+services:
+  clean-weather:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: clean-weather-app
+    ports:
+      - "3000:3000"
+    restart: unless-stopped
+    env_file:
+      - .env
+    environment:
+      - NODE_ENV=production
+    networks:
+      - clean-weather-network
+
+networks:
+  clean-weather-network:
+    driver: bridge
