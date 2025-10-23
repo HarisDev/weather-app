@@ -13,7 +13,7 @@ export default function useWeather(geoLocation: GeoLocation, loadForecast = fals
   const currentConditionsInput = geoLocation ? { location: { latitude: geoLocation.latitude ?? 0, longitude: geoLocation.longitude ?? 0 } } : null;
   const forecastInput = loadForecast ? { location: { latitude: geoLocation.latitude ?? 0, longitude: geoLocation.longitude ?? 0 }, days: 4 } : null;
 
-  const { data: currentConditions, isLoading: isCurrentConditionsLoading } = useCurrentConditions(currentConditionsInput);
+  const { data: currentConditions, isError: isCurrentConditionsError, isLoading: isCurrentConditionsLoading } = useCurrentConditions(currentConditionsInput);
   const { data: location, isLoading: isLocationLoading } = useReverseGeocode(geoLocation?.latitude, geoLocation?.longitude);
   const { data: forecasts, isLoading: isForecastsLoading } = useDailyForecast(loadForecast ? forecastInput : null);
 
@@ -26,6 +26,7 @@ export default function useWeather(geoLocation: GeoLocation, loadForecast = fals
     isCurrentConditionsLoading,
     isLocationLoading,
     isForecastsLoading,
+    isCurrentConditionsError,
     forecasts: forecasts ?? null,
   };
 }

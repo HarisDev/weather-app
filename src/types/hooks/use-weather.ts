@@ -9,4 +9,5 @@ export type UseWeatherHookResult = {
   isCurrentConditionsLoading: boolean;
   isLocationLoading: boolean;
   isForecastsLoading: boolean;
+  isCurrentConditionsError: boolean;
 };
