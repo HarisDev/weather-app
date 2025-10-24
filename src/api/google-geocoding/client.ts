@@ -1,5 +1,5 @@
 import { GOOGLE_PLACES_API_KEY, GOOGLE_GEOCODING_API_BASE_URL } from "@/constants/api";
-import type { ReverseGeocodeResponse } from "@/types/api/google-geocoding";
+import type { AddressComponent, ReverseGeocodeResponse } from "@/types/api/google-geocoding";
 
 /**
  * Reverse geocode coordinates to get city and country.
@@ -29,7 +29,7 @@ export async function reverseGeocode(latitude: number, longitude: number): Promi
           const addressComponents = result.address_components || [];
 
           // Try to find locality first
-          const locality = addressComponents.find((component: any) => component.types.includes("locality"));
+          const locality = addressComponents.find((component: AddressComponent) => component.types.includes("locality"));
 
           if (locality?.long_name) {
             city = locality.long_name;
@@ -37,7 +37,7 @@ export async function reverseGeocode(latitude: number, longitude: number): Promi
           }
 
           // Fall back to administrative_area_level_1
-          const adminArea = addressComponents.find((component: any) => component.types.includes("administrative_area_level_1"));
+          const adminArea = addressComponents.find((component: AddressComponent) => component.types.includes("administrative_area_level_1"));
 
           if (adminArea?.long_name) {
             city = adminArea.long_name;
@@ -45,7 +45,7 @@ export async function reverseGeocode(latitude: number, longitude: number): Promi
           }
 
           // Last resort: use country
-          const country = addressComponents.find((component: any) => component.types.includes("country"));
+          const country = addressComponents.find((component: AddressComponent) => component.types.includes("country"));
 
           if (country?.long_name) {
             city = country.long_name;

@@ -25,7 +25,7 @@ export const isBrowserGeolocationAllowed = async (): Promise<boolean> => {
   try {
     const result = await navigator.permissions.query({ name: "geolocation" });
     return result.state === "granted";
-  } catch (error) {
+  } catch {
     return false;
   }
 };

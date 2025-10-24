@@ -14,7 +14,7 @@ export default function AggregatedWeatherDisplay({ geoLocation }: { geoLocation:
       // Propagate the current weather type to the context so we can change the bg color.
       setCurrentWeatherType(weather.currentConditions.weatherCondition.type);
     }
-  }, [weather.currentConditions]);
+  }, [weather.currentConditions, setCurrentWeatherType]);
 
   return (
     <>
