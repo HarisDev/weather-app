@@ -35,7 +35,7 @@ export default function UsePreciseLocation({ deviceGeoLocation }: { deviceGeoLoc
 
   return (
     <Tooltip open={isTooltipOpen} onOpenChange={setIsTooltipOpen}>
-      <TooltipTrigger>
+      <TooltipTrigger asChild>
         <Button size="lg" variant="outline" onClick={handleClick} className={cn("bg-white text-black cursor-pointer")} aria-label="Toggle accessibility settings">
           {showCheckmark ? <CheckCircle /> : <Navigation />}
           <span className="sm:hidden">Use Precise Location</span>

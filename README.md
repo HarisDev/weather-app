@@ -59,3 +59,15 @@ npm run build   # Build for production
 npm run serve   # Preview production build
 npm run test    # Run tests
 ```
+
+## Tests
+
+The project includes 3 types of tests with test coverage:
+
+- **Unit Tests**: Component and utility function tests
+- **Integration Tests**: Feature-level testing with mocked dependencies
+- **E2E Tests**: End-to-end tests using Playwright
+
+Run tests with `npm run test`
+
+Run E2E tests with `npm run test:e2e`
