@@ -1,12 +1,14 @@
 import { describe, it, expect, vi } from "vitest";
 import { render, screen } from "@testing-library/react";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { QueryClient, QueryClientProvider, type UseQueryResult } from "@tanstack/react-query";
 import React from "react";
 import Suggestion from "@/components/main/search/suggestion";
 import * as googlePlacesHooks from "@/api/google-places/hooks";
 import * as googleWeatherHooks from "@/api/google-weather/hooks";
 import { CurrentWeatherProvider } from "@/contexts/CurrentWeatherContext";
 import { UnitsSystemProvider } from "@/contexts/UnitsSystemContext";
+import type { Place } from "@/types/api/google-places";
+import type { CurrentConditions } from "@/types/api/google-weather";
 
 vi.mock("@/api/google-places/hooks");
 vi.mock("@/api/google-weather/hooks");
@@ -17,14 +19,7 @@ const createWrapper = () => {
       queries: { retry: false },
     },
   });
-  return ({ children }: { children: React.ReactNode }) =>
-    React.createElement(
-      QueryClientProvider,
-      { client: queryClient },
-      React.createElement(UnitsSystemProvider, null,
-        React.createElement(CurrentWeatherProvider, null, children)
-      )
-    );
+  return ({ children }: { children: React.ReactNode }) => React.createElement(QueryClientProvider, { client: queryClient }, React.createElement(UnitsSystemProvider, null, React.createElement(CurrentWeatherProvider, null, children)));
 };
 
 const mockSuggestion = {
@@ -42,12 +37,12 @@ describe("Suggestion component", () => {
   it("should render place name", () => {
     vi.mocked(googlePlacesHooks.usePlaceDetails).mockReturnValue({
       data: undefined,
-    } as any);
+    } as UseQueryResult<Place | null>);
 
     vi.mocked(googleWeatherHooks.useCurrentConditions).mockReturnValue({
       data: undefined,
       isFetching: false,
-    } as any);
+    } as UseQueryResult<CurrentConditions>);
 
     render(<Suggestion suggestion={mockSuggestion} handleClose={() => {}} />, { wrapper: createWrapper() });
 
@@ -58,12 +53,12 @@ describe("Suggestion component", () => {
   it("should show skeleton when weather is loading", () => {
     vi.mocked(googlePlacesHooks.usePlaceDetails).mockReturnValue({
       data: { location: { latitude: 40.7128, longitude: -74.006 } },
-    } as any);
+    } as UseQueryResult<Place | null>);
 
     vi.mocked(googleWeatherHooks.useCurrentConditions).mockReturnValue({
       data: undefined,
       isFetching: true,
-    } as any);
+    } as UseQueryResult<CurrentConditions>);
 
     const { container } = render(<Suggestion suggestion={mockSuggestion} handleClose={() => {}} />, { wrapper: createWrapper() });
 
@@ -74,7 +69,7 @@ describe("Suggestion component", () => {
   it("should display weather data when available", () => {
     vi.mocked(googlePlacesHooks.usePlaceDetails).mockReturnValue({
       data: { location: { latitude: 40.7128, longitude: -74.006 } },
-    } as any);
+    } as UseQueryResult<Place | null>);
 
     vi.mocked(googleWeatherHooks.useCurrentConditions).mockReturnValue({
       data: {
@@ -85,7 +80,7 @@ describe("Suggestion component", () => {
         },
       },
       isFetching: false,
-    } as any);
+    } as UseQueryResult<CurrentConditions>);
 
     render(<Suggestion suggestion={mockSuggestion} handleClose={() => {}} />, { wrapper: createWrapper() });
 
@@ -96,12 +91,12 @@ describe("Suggestion component", () => {
   it("should render map pin icon", () => {
     vi.mocked(googlePlacesHooks.usePlaceDetails).mockReturnValue({
       data: undefined,
-    } as any);
+    } as UseQueryResult<Place | null>);
 
     vi.mocked(googleWeatherHooks.useCurrentConditions).mockReturnValue({
       data: undefined,
       isFetching: false,
-    } as any);
+    } as UseQueryResult<CurrentConditions>);
 
     const { container } = render(<Suggestion suggestion={mockSuggestion} handleClose={() => {}} />, { wrapper: createWrapper() });
 

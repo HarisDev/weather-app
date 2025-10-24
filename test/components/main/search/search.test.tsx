@@ -1,9 +1,10 @@
 import { describe, it, expect, vi } from "vitest";
 import { render, screen, fireEvent } from "@testing-library/react";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { QueryClient, QueryClientProvider, type UseQueryResult } from "@tanstack/react-query";
 import React from "react";
 import Search from "@/components/main/search/search";
 import * as googlePlacesHooks from "@/api/google-places/hooks";
+import type { AutocompleteOutput } from "@/types/api/google-places";
 
 vi.mock("@/api/google-places/hooks");
 
@@ -21,7 +22,7 @@ describe("Search component", () => {
     vi.mocked(googlePlacesHooks.usePlacesAutocomplete).mockReturnValue({
       data: undefined,
       isFetching: false,
-    } as any);
+    } as UseQueryResult<AutocompleteOutput>);
 
     render(<Search />, { wrapper: createWrapper() });
 
@@ -32,7 +33,7 @@ describe("Search component", () => {
     vi.mocked(googlePlacesHooks.usePlacesAutocomplete).mockReturnValue({
       data: undefined,
       isFetching: false,
-    } as any);
+    } as UseQueryResult<AutocompleteOutput>);
 
     render(<Search />, { wrapper: createWrapper() });
 
@@ -47,7 +48,7 @@ describe("Search component", () => {
     vi.mocked(googlePlacesHooks.usePlacesAutocomplete).mockReturnValue({
       data: undefined,
       isFetching: true,
-    } as any);
+    } as UseQueryResult<AutocompleteOutput>);
 
     const { container } = render(<Search />, { wrapper: createWrapper() });
 
@@ -59,7 +60,7 @@ describe("Search component", () => {
     vi.mocked(googlePlacesHooks.usePlacesAutocomplete).mockReturnValue({
       data: undefined,
       isFetching: false,
-    } as any);
+    } as UseQueryResult<AutocompleteOutput>);
 
     render(<Search />, { wrapper: createWrapper() });
 
