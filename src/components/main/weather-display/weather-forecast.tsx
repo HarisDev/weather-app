@@ -22,14 +22,16 @@ export default function WeatherForecast({ weather }: { weather: UseWeatherHookRe
           ))}
         </>
       ) : (
-        forecasts?.forecastDays.map((forecast) => (
+        forecasts?.forecastDays?.map((forecast) => (
           <article
             key={forecast.interval.startTime}
             className="flex rounded-md py-2 px-3 flex-row justify-center items-center gap-2"
             aria-label={`Forecast for ${formatDate(forecast.interval.startTime)}: ${forecast.daytimeForecast?.weatherCondition?.description?.text}, high of ${formatTemperature(forecast.maxTemperature.degrees)}`}
           >
             <img src={formatWeatherConditionImage(forecast.daytimeForecast?.weatherCondition)} alt="" aria-hidden="true" className="w-8 h-8" />
-            <span className="text-4xl" aria-label={`High temperature: ${formatTemperature(forecast.maxTemperature.degrees)}`}>{formatTemperature(forecast.maxTemperature.degrees)}</span>
+            <span className="text-4xl" aria-label={`High temperature: ${formatTemperature(forecast.maxTemperature.degrees)}`}>
+              {formatTemperature(forecast.maxTemperature.degrees)}
+            </span>
             <div className="flex flex-col justify-center items-start">
               <span className="text-sm">{formatDate(forecast.interval.startTime)}</span>
               <span className="text-sm">{forecast.daytimeForecast?.weatherCondition?.description?.text}</span>
