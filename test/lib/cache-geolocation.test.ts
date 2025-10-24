@@ -1,10 +1,17 @@
-import { describe, it, expect, vi, beforeEach } from 'vitest'
+import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest'
 import { getCachedLocation, setCachedLocation } from '@/lib/cache-geolocation'
 
 describe('cache-geolocation', () => {
+  let originalGetItem: typeof localStorage.getItem
+
   beforeEach(() => {
     vi.clearAllMocks()
     localStorage.clear()
+    originalGetItem = localStorage.getItem
+  })
+
+  afterEach(() => {
+    localStorage.getItem = originalGetItem
   })
 
   describe('getCachedLocation', () => {
@@ -57,10 +64,10 @@ describe('cache-geolocation', () => {
 
       setCachedLocation(location)
 
-      expect(localStorage.setItem).toHaveBeenCalledWith(
-        'geoLocation',
-        expect.stringContaining('"latitude":40.7128')
-      )
+      const stored = localStorage.getItem('geoLocation')
+      expect(stored).toBeTruthy()
+      expect(stored).toContain('"latitude":40.7128')
+      expect(stored).toContain('"longitude":-74.006')
     })
   })
 })
