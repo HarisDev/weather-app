@@ -34,13 +34,14 @@ describe('WeatherForecast', () => {
         forecastDays: [
           {
             interval: { startTime: '2025-01-16', endTime: '2025-01-17' },
-            displayDate: '2025-01-16',
-            maxTemperature: { degrees: 25 },
-            minTemperature: { degrees: 15 },
+            displayDate: { year: 2025, month: 1, day: 16 },
+            maxTemperature: { degrees: 25, unit: 'C' },
+            minTemperature: { degrees: 15, unit: 'C' },
             daytimeForecast: {
               weatherCondition: {
-                description: { text: 'Sunny' },
+                description: { text: 'Sunny', languageCode: 'en' },
                 iconBaseUri: 'https://example.com/icon',
+                type: 'sunny',
               },
             },
           },

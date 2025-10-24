@@ -38,10 +38,10 @@ describe('WeatherHero', () => {
   it('should display weather data', () => {
     const weather = {
       currentConditions: {
-        temperature: { degrees: 22 },
-        feelsLikeTemperature: { degrees: 20 },
+        temperature: { degrees: 22, unit: 'C' },
+        feelsLikeTemperature: { degrees: 20, unit: 'C' },
         weatherCondition: {
-          description: { text: 'Sunny' },
+          description: { text: 'Sunny', languageCode: 'en' },
           iconBaseUri: 'https://example.com/icon',
           type: 'clear'
         },
